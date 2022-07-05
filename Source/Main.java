@@ -1,7 +1,4 @@
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.*;
 import java.util.*;
 
 public class Main {
@@ -15,6 +12,7 @@ public class Main {
         if (map.isEmpty()) {
             ReadFile("slang.txt");
         }
+        history = loadHistory("history.txt");
         Menu();
     }
 
@@ -46,9 +44,9 @@ public class Main {
         if (choice == 1) {
             searchBySlang();
         } else if (choice == 2) {
-
+            searchByDef();
         } else if (choice == 3) {
-
+            showHistory();
         } else if (choice == 4) {
 
         } else if (choice == 5) {
@@ -64,6 +62,7 @@ public class Main {
         } else if (choice == 10) {
 
         } else {
+            WriteHistory("history.txt");
             WriteFile("newslang.txt");
             System.exit(0);
         }
@@ -88,6 +87,91 @@ public class Main {
         Menu();
     }
 
+    public static void searchByDef() {
+
+        ArrayList<String> slang_means = new ArrayList<String>();
+        System.out.print("Press a Definition: ");
+        String word = sc.nextLine();
+        history.add(word);
+        word = word.toLowerCase();
+        for (String i : map.keySet()) {
+            for (String s: map.get(i)) {
+                if (s.toLowerCase().contains(word)) {
+                    slang_means.add(i);
+                }
+            }
+        }
+
+        if (!slang_means.isEmpty()) {
+            System.out.println("Slang Words found: ");
+            for (String i : slang_means) {
+                System.out.print("- " + i + ": ");
+                ShowDefinition(i);
+            }
+        }
+        else {
+            System.out.println("Not Found !");
+        }
+        pauseTerminal();
+        Menu();
+    }
+
+    public static void ShowDefinition(String slang) {
+        List<String> l = map.get(slang);
+        for (String s: l) {
+            System.out.print(s + ", ");
+        }
+        System.out.print("\b\b     \n");
+    }
+
+    public static void showHistory() {
+        System.out.println("History:");
+        for (String i : history) {
+            System.out.println("- " + i);
+        }
+        pauseTerminal();
+        Menu();
+    }
+
+    public static void WriteHistory(String file_name) {
+        try {
+            File f = new File(file_name);
+            FileWriter fw = new FileWriter(f);
+            BufferedWriter bw = new BufferedWriter(fw);
+            for (String i : history) {
+                fw.write(i + "\n");
+            }
+
+            fw.close();
+            bw.close();
+        }
+
+        catch (Exception ex) {
+            System.out.println("Error: "+ex);
+        }
+    }
+
+    public static ArrayList<String> loadHistory (String file_name) {
+        ArrayList<String> his = new ArrayList<String>();
+        try {
+            File f = new File(file_name);
+            FileReader fr = new FileReader(f);
+
+            BufferedReader br = new BufferedReader(fr);
+            String line;
+            while ((line = br.readLine()) != null) {
+                his.add(line);
+            }
+
+            fr.close();
+            br.close();
+        }
+        catch (Exception ex) {
+            System.out.println("Error: "+ex);
+        }
+
+        return his;
+    }
     public static void ReadFile(String file_name) {
         try {
             File f = new File(file_name);
