@@ -48,9 +48,9 @@ public class Main {
         } else if (choice == 3) {
             showHistory();
         } else if (choice == 4) {
-
+            addSlang();
         } else if (choice == 5) {
-
+            editSlang();
         } else if (choice == 6) {
 
         } else if (choice == 7) {
@@ -172,6 +172,68 @@ public class Main {
 
         return his;
     }
+
+    public static void addSlang() {
+
+        System.out.print("Enter Slang Word: ");
+        String slang = sc.nextLine();
+        System.out.print("Enter Definition: ");
+        String means = sc.nextLine();
+        if (map.containsKey(slang)) {
+            System.out.println("Slang Word was existed, Choose: ");
+            System.out.println("1. Overwrite");
+            System.out.println("2. Duplicate");
+            int c = sc.nextInt();
+            if (c == 1) {
+                addSlang(slang, means);
+            }
+            else if (c == 2) {
+                Duplicate(slang, means);
+            }
+        }
+        else {
+            addSlang(slang, means);
+        }
+        pauseTerminal();
+        Menu();
+    }
+    public static void addSlang(String slang, String means) {
+        ArrayList<String> tmp = new ArrayList<String>();
+        tmp.add(means);
+        map.put(slang.toUpperCase(), tmp);
+        System.out.println("Add Successfully!!!");
+    }
+
+    public static void Duplicate(String slang, String means) {
+        List<String> tmp = new ArrayList<String>();
+        tmp = map.get(slang);
+        tmp.add(means);
+        map.put(slang.toUpperCase(), tmp);
+        System.out.println("Add Successfully!!!");
+    }
+
+    public static void editSlang() {
+        System.out.print("Press Slang Word you want to edit: ");
+        String slang = sc.nextLine();
+        slang = slang.toUpperCase();
+        if (!map.containsKey(slang)) {
+            System.out.println("This Slang Word does not exist!!");
+        }
+        else {
+            System.out.print("Press New Slang Word: ");
+            String new_slang = sc.nextLine();
+            System.out.print("Press New Meaning: ");
+            String new_means = sc.nextLine();
+            List<String> tmp = new ArrayList<String>();
+            tmp.add(new_means);
+            map.put(new_slang.toUpperCase(), tmp);
+            map.remove(slang);
+            System.out.println("Edit Successfully!!");
+        }
+        pauseTerminal();
+        Menu();
+    }
+
     public static void ReadFile(String file_name) {
         try {
             File f = new File(file_name);
