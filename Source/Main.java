@@ -52,9 +52,9 @@ public class Main {
         } else if (choice == 5) {
             editSlang();
         } else if (choice == 6) {
-
+            deleteSlang();
         } else if (choice == 7) {
-
+            reset();
         } else if (choice == 8) {
 
         } else if (choice == 9) {
@@ -229,6 +229,43 @@ public class Main {
             map.put(new_slang.toUpperCase(), tmp);
             map.remove(slang);
             System.out.println("Edit Successfully!!");
+        }
+        pauseTerminal();
+        Menu();
+    }
+
+    public static void deleteSlang() {
+
+        System.out.print("Enter Slang Word you want to delete: ");
+        String slang = sc.nextLine();
+        slang = slang.toUpperCase();
+        if (!map.containsKey(slang)) {
+            System.out.println("This Slang Word does not exist!!");
+        }
+        else {
+            System.out.println("Confirm Delete (y/n)? ");
+            String choice = sc.next();
+            if (choice.equals("y") || choice.equals("Y")) {
+                map.remove(slang);
+                System.out.println("Delete Successfully!!");
+            }
+            else {
+                System.out.println("Not Delete!");
+            }
+        }
+        pauseTerminal();
+        Menu();
+    }
+
+    public static void reset() {
+
+        map.clear();;
+        if (map.isEmpty()) {
+            ReadFile("slang.txt");
+            System.out.println("Reset Successfully!!");
+        }
+        else {
+            System.out.println("Reset Fail!!");
         }
         pauseTerminal();
         Menu();
