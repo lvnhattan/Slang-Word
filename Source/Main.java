@@ -56,9 +56,9 @@ public class Main {
         } else if (choice == 7) {
             reset();
         } else if (choice == 8) {
-
+            randomSlang();
         } else if (choice == 9) {
-
+            findDefBySlang();
         } else if (choice == 10) {
 
         } else {
@@ -266,6 +266,53 @@ public class Main {
         }
         else {
             System.out.println("Reset Fail!!");
+        }
+        pauseTerminal();
+        Menu();
+    }
+
+    public static String RandomKey() {
+        Object[] Keys = map.keySet().toArray();
+        return (String)Keys[new Random().nextInt(Keys.length)];
+    }
+
+    public static void randomSlang() {
+        String random_key = RandomKey();
+
+        System.out.println("Random Slang Word :");
+        System.out.print("- " + random_key + ": ");
+        ShowDefinition(random_key);
+        pauseTerminal();
+        Menu();
+    }
+
+    public static void findDefBySlang() {
+
+        Random r = new Random();
+        List<String> choice = new ArrayList<String>();
+        for(int i = 0; i < 4; i++) {
+            String word = RandomKey();
+            choice.add(word);
+        }
+
+        String ques_key = choice.get(r.nextInt(choice.size()));
+
+        System.out.println("Slang Word: " + ques_key);
+        System.out.println("What is Definition of Slang Word?");
+        System.out.println("Choose answer from 1 to 4:");
+        int index = 1;
+        for (String i : choice) {
+            System.out.print(index + ". ");
+            ShowDefinition(i);
+            index++;
+        }
+        System.out.print("Your answer: ");
+        int input = sc.nextInt();
+        if (choice.get(input - 1).equals(ques_key)){
+            System.out.println("Congratulation! You won the game!");
+        }
+        else {
+            System.out.println("You lose the game!");
         }
         pauseTerminal();
         Menu();
