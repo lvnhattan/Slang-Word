@@ -18,7 +18,6 @@ public class Main {
 
     public static void Menu() {
 
-
         System.out.println("======================MENU======================");
         System.out.println("1. Search by Slang Word");
         System.out.println("2. Search by Definition");
